@@ -1,0 +1,12 @@
+#ifndef MIXPANELQT_GLOBAL_H
+#define MIXPANELQT_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(MIXPANELQT_LIBRARY)
+#  define MIXPANELQTSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define MIXPANELQTSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // MIXPANELQT_GLOBAL_H
