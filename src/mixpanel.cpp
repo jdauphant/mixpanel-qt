@@ -2,12 +2,18 @@
 #include <qjson/serializer.h>
 
 const QString Mixpanel::DEFAULT_ENDPOINT = "http://api.mixpanel.com/";
+const QString Mixpanel::SET = "$set";
+const QString Mixpanel::SET_ONCE = "$set_once";
+const QString Mixpanel::ADD = "$add";
+const QString Mixpanel::APPEND = "$append";
+const QString Mixpanel::UNION = "$union";
+const QString Mixpanel::DEFAULT_OPERATION = SET;
 
 Mixpanel::Mixpanel(const QString &token) :endpoint(DEFAULT_ENDPOINT), token(token), distinct_id(QString()), verbose(DEFAULT_VERBOSE)
 {
 }
 
-bool Mixpanel::track(QString event, QVariantMap properties, QString mp_name_tag)
+bool Mixpanel::track(QString event, QVariantMap properties)
 {
     QVariantMap parameters;
     parameters.insert("event", event);
@@ -17,8 +23,25 @@ bool Mixpanel::track(QString event, QVariantMap properties, QString mp_name_tag)
         properties.insert("distinct_id", distinct_id);
 
     parameters.insert("properties", properties);
+    return sendRequest("track",parameters);
+}
 
+bool Mixpanel::engage(QVariantMap properties, QString operation)
+{
+    QVariantMap parameters;
+    parameters.insert("$token", token);
+    if(distinct_id==QString())
+    {
+        qCritical() << "distinct_id needed for engage";
+        return false;
+    }
+    parameters.insert("$distinct_id", distinct_id);
+    parameters.insert(operation, properties);
+    return sendRequest("engage", parameters);
+}
 
+bool Mixpanel::sendRequest(QString path, const QVariantMap & parameters)
+{
     QJson::Serializer serializer;
     bool ok;
     QByteArray json = serializer.serialize(parameters, &ok);
@@ -28,16 +51,6 @@ bool Mixpanel::track(QString event, QVariantMap properties, QString mp_name_tag)
       qCritical() << "Something went wrong:" << serializer.errorMessage();
       return ok;
     }
-    return sendRequest("track",json);
-}
-
-bool Mixpanel::engage(QVariantMap properties, Mixpanel::EngageOperation operation)
-{
-
-}
-
-bool Mixpanel::sendRequest(QString path, QByteArray json)
-{
     QByteArray data = json.toBase64();
     QString urlString = endpoint+path+"/?data="+data;
     if(verbose)

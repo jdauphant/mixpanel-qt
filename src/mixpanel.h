@@ -9,17 +9,16 @@ class MIXPANELQTSHARED_EXPORT Mixpanel: public QObject
 {
     Q_OBJECT
 public:
-    enum EngageOperation {
-        set,
-        set_once,
-        add,
-        append,
-        union_
-    };
+    const static QString SET;
+    const static QString SET_ONCE;
+    const static QString ADD;
+    const static QString APPEND;
+    const static QString UNION;
+
 
     const static QString DEFAULT_ENDPOINT;
     const static bool DEFAULT_VERBOSE = false;
-    const static EngageOperation DEFAULT_OPERATION = set;
+    const static QString DEFAULT_OPERATION;
 
 private:
     QString endpoint;
@@ -39,21 +38,19 @@ public:
     bool getVerbose() const;
     void setVerbose(bool value);
 
-    bool track(QString event, QVariantMap properties = QVariantMap(), QString mp_name_tag="");
-    bool engage(QVariantMap properties, EngageOperation operation = DEFAULT_OPERATION);
+    bool track(QString event, QVariantMap properties = QVariantMap());
+    bool engage(QVariantMap properties, QString operation = DEFAULT_OPERATION);
 
 signals:
     void sended();
     void error();
 
 private:
-    bool sendRequest(QString path,QByteArray data);
+    bool sendRequest(QString path, const QVariantMap & parameters);
 
 private slots:
     void networkError(QNetworkReply::NetworkError networkError);
     void networkFinished();
-
-
 };
 
 
