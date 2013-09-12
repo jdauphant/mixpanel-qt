@@ -126,11 +126,11 @@ void MixpanelTest::mixpanelEngageCase_data()
     QTest::addColumn<bool>("verbose");
 
     QVariantMap test1;
-    test1.insert("gender", "male");
-    test1.insert("age", 15);
+    test1.insert("Gender", "Male");
+    test1.insert("Age", 15);
     QTest::newRow("Set john") << test1 << QString("john_doe_1234") << Mixpanel::SET << true;
     QVariantMap test2;
-    test2.insert("gender", "female");
+    test2.insert("Gender", "Female");
     test2.insert("birthday", "1987-09-20");
     QTest::newRow("Set jane") << test2 << QString("jane_doe_12") << Mixpanel::SET << false;
 
