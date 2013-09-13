@@ -16,12 +16,13 @@ TEMPLATE = app
 
 
 SOURCES += tst_mixpaneltest.cpp
-HEADERS += mixpanel.h
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-mixpanel-qt-Desktop-Release -lmixpanel-qt
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-mixpanel-qt-Desktop-Debug -lmixpanel-qt
-else:unix: LIBS += -L$$PWD/../../build-mixpanel-qt-Desktop-Release/ -lmixpanel-qt
 
-INCLUDEPATH += $$PWD/../src
-DEPENDPATH += $$PWD/../src
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../lib/debug/release/ -lmixpanel-qt
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../lib/debug/debug/ -lmixpanel-qt
+else:unix: LIBS += -L$$PWD/../../lib/debug/ -lmixpanel-qt
+
+INCLUDEPATH += $$PWD/../../lib $$PWD/../src
+DEPENDPATH += $$PWD/../../lib

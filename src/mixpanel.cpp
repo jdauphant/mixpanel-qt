@@ -67,7 +67,7 @@ bool Mixpanel::sendRequest(QString path, const QVariantMap & parameters)
     return (networkReply->isFinished() || networkReply->isRunning());
 }
 
-void Mixpanel::networkError(QNetworkReply::NetworkError networkError)
+void Mixpanel::networkError(QNetworkReply::NetworkError)
 {
     QNetworkReply *networkReply = qobject_cast<QNetworkReply*>(sender());
     qCritical() << networkReply->errorString();

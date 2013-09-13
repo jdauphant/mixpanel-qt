@@ -49,7 +49,7 @@ private:
     bool sendRequest(QString path, const QVariantMap & parameters);
 
 private slots:
-    void networkError(QNetworkReply::NetworkError networkError);
+    void networkError(QNetworkReply::NetworkError);
     void networkFinished();
 };
 
