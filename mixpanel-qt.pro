@@ -10,6 +10,8 @@ QT       -= gui
 
 TARGET = mixpanel-qt
 TEMPLATE = lib
+DESTDIR = ../lib
+
 
 DEFINES += MIXPANELQT_LIBRARY
 
@@ -17,6 +19,11 @@ SOURCES += src/mixpanel.cpp
 
 HEADERS += src/mixpanel.h\
         src/mixpanel-qt_global.h
+
+debug: {
+     unix: TARGET = $$join(TARGET,,,_debug)
+     else: TARGET = $$join(TARGET,,,d)
+}
 
 unix:!symbian {
     maemo5 {
@@ -26,5 +33,6 @@ unix:!symbian {
     }
     INSTALLS += target
 }
+
 
 unix|win32: LIBS += -lqjson
