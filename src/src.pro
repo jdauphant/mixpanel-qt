@@ -4,6 +4,13 @@
 #
 #-------------------------------------------------
 
+release: {
+DEFAULT_SUBDIR = release
+}
+else: debug: {
+     DEFAULT_SUBDIR = debug
+}
+
 QT       += network
 
 QT       -= gui
@@ -11,10 +18,7 @@ QT       -= gui
 TARGET = mixpanel-qt
 TEMPLATE = lib
 
-DESTDIR = $$PWD/../../lib/release
-debug: {
-     DESTDIR = $$PWD/../../lib/debug
-}
+DESTDIR = $$PWD/../../lib/$$DEFAULT_SUBDIR
 
 DEFINES += MIXPANELQT_LIBRARY
 
