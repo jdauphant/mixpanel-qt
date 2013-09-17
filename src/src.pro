@@ -31,5 +31,8 @@ unix:!symbian {
     INSTALLS += target
 }
 
+macx {
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.5
+}
 
 unix|win32: LIBS += -lqjson
