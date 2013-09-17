@@ -35,6 +35,7 @@ unix:!symbian {
 macx {
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.5
     INCLUDEPATH += /opt/local/include/
+    LIBS += -L/opt/local/lib/
 }
 
 unix|win32: LIBS += -lqjson
