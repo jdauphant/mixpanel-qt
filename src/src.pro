@@ -10,6 +10,7 @@ QT       -= gui
 
 TARGET = mixpanel-qt
 TEMPLATE = lib
+
 DESTDIR = $$PWD/../../lib/release
 debug: {
      DESTDIR = $$PWD/../../lib/debug
@@ -33,6 +34,7 @@ unix:!symbian {
 
 macx {
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.5
+    INCLUDEPATH += /opt/local/include/
 }
 
 unix|win32: LIBS += -lqjson
