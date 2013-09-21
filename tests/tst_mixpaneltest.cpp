@@ -71,8 +71,8 @@ void MixpanelTest::mixpanelTrackCase_data()
     test1.insert("time", QDateTime().toTime_t());
     QTest::newRow("Event with properties 1 verbose") << QString("TrackCase with properties 1") << test1 << QString() << true;
     QVariantMap test2;
-    test1.insert("time", QDateTime().toTime_t());
-    test1.insert("mp_name_tag", "Stream Name");
+    test2.insert("time", QDateTime().toTime_t());
+    test2.insert("mp_name_tag", "Stream Name");
     QTest::newRow("Event with properties 2 verbose") << QString("TrackCase with properties 2") << test2 << QString() << true;
 
 
@@ -85,16 +85,25 @@ void MixpanelTest::mixpanelTrackCase_data()
     QTest::newRow("John event 2") << QString("Signin") << QVariantMap() << QString("john_doe_1234") << false;
     QTest::newRow("John event 3") << QString("Buy somethings") << QVariantMap() << QString("john_doe_1234") << false;
     QVariantMap test3;
-    test1.insert("mp_name_tag", "Buy stream");
+    test3.insert("mp_name_tag", "Buy stream");
     QTest::newRow("John event with properties 1") << QString("Buy another things") << test3 << QString("john_doe_1234") << false;
     QVariantMap test4;
-    test1.insert("time", QDateTime().toTime_t());
-    test1.insert("mp_name_tag", "Buy stream");
+    test4.insert("time", QDateTime().toTime_t());
+    test4.insert("mp_name_tag", "Buy stream");
     QTest::newRow("John event with properties 2") << QString("Buy yet another things") << test4 << QString("john_doe_1234") << false;
 
     QTest::newRow("Jane event 1") << QString("Signup") << QVariantMap() << QString("jane_doe_12") << false;
     QTest::newRow("Jane event 2") << QString("Signin") << QVariantMap() << QString("jane_doe_12") << false;
     QTest::newRow("Jane event 3") << QString("Buy somethings") << QVariantMap() << QString("jane_doe_12") << false;
+
+    QTest::newRow("{d5b65c21-38c2-46b2-b89a-ec7801e4e632} event 1") << QString("Signup") << QVariantMap() << QString("{d5b65c21-38c2-46b2-b89a-ec7801e4e632}") << false;
+    QTest::newRow("{d5b65c21-38c2-46b2-b89a-ec7801e4e632} event 2") << QString("Signin") << QVariantMap() << QString("{d5b65c21-38c2-46b2-b89a-ec7801e4e632}") << false;
+
+    QVariantMap test5;
+    test5.insert("During in second", QVariant::fromValue(29999l));
+    QTest::newRow("{d5b65c21-38c2-46b2-b89a-ec7801e4e632} event 3 with long") << QString("Event") << test5 << QString("{d5b65c21-38c2-46b2-b89a-ec7801e4e632}") << false;
+    // Doesn't work, QJson 0.7.1 apparently don't support long
+
 }
 
 void MixpanelTest::mixpanelEngageCase()
@@ -145,7 +154,23 @@ void MixpanelTest::mixpanelEngageCase_data()
     QVariantMap test6;
     test6.insert("Items Buy",test5);
     QTest::newRow("Union john 2") << test6 << QString("john_doe_1234") << Mixpanel::UNION << true;
+
+    QVariantMap test7;
+    test7.insert("Total Buy",1);
+    test7.insert("Total Amount",209);
+    QTest::newRow("Add john 1") << test7 << QString("john_doe_1234") << Mixpanel::ADD << true;
+
+    QVariantMap test8;
+    test8.insert("Total Buy",2);
+    test8.insert("Total Amount",75);
+    QTest::newRow("Add john 2") << test8 << QString("john_doe_1234") << Mixpanel::ADD << true;
+
+    QVariantMap test9;
+    test9.insert("Total Buy",3);
+    test9.insert("Total Amount",70);
+    QTest::newRow("Add {d5b65c21-38c2-46b2-b89a-ec7801e4e632}") << test8 << QString("{d5b65c21-38c2-46b2-b89a-ec7801e4e632}") << Mixpanel::ADD << true;
 }
+
 
 QTEST_MAIN(MixpanelTest)
 

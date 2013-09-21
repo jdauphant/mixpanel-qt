@@ -45,6 +45,9 @@ bool Mixpanel::sendRequest(QString path, const QVariantMap & parameters)
     QJson::Serializer serializer;
     QByteArray json = serializer.serialize(parameters);
     qDebug() << json;
+    if(QByteArray("")==json)
+        return false;
+
     QByteArray data = json.toBase64();
     QString urlString = endpoint+path+"/?data="+data;
     if(verbose)

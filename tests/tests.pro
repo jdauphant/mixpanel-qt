@@ -31,7 +31,7 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../lib/debug/debug/ 
 else:unix: LIBS += -L$$PWD/../../lib/debug/ -lmixpanel-qt
 
 macx {
-    QMAKE_POST_LINK += cp $$PWD/../../lib/$${DEFAULT_SUBDIR}/*.dylib $$DESTDIR/$${TARGET}.app/Contents/MacOS/
+    QMAKE_POST_LINK += cp $$PWD/../../lib/$${DEFAULT_SUBDIR}/*.dylib $$OUT_PWD/
 }
 
 INCLUDEPATH += $$PWD/../../lib $$PWD/../src
