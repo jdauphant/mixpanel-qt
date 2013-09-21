@@ -51,7 +51,7 @@ void MixpanelTest::mixpanelTrackCase()
     QSignalSpy spyError(mixpanel, SIGNAL(error()));
     QVERIFY(mixpanel->track(event,properties));
 
-    QTest::qWait(2000);
+    QTest::qWait(1000);
 
     QCOMPARE(spySended.count(), 1);
     QCOMPARE(spyError.count(), 0);

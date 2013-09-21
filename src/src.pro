@@ -4,11 +4,11 @@
 #
 #-------------------------------------------------
 
-release: {
-DEFAULT_SUBDIR = release
-}
-else: debug: {
+CONFIG(debug, debug|release) {
      DEFAULT_SUBDIR = debug
+}
+else: {
+     DEFAULT_SUBDIR = release
 }
 
 QT       += network

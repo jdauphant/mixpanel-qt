@@ -43,16 +43,8 @@ bool Mixpanel::engage(QVariantMap properties, QString operation)
 bool Mixpanel::sendRequest(QString path, const QVariantMap & parameters)
 {
     QJson::Serializer serializer;
-    bool ok;
-    QBuffer buffer;
-    serializer.serialize(parameters, &buffer, &ok);
-    if (false == ok) {
-      qCritical() << "Impossible to generate the JSON";
-      return ok;
-    }
-    QByteArray json = buffer.data();
+    QByteArray json = serializer.serialize(parameters);
     qDebug() << json;
-
     QByteArray data = json.toBase64();
     QString urlString = endpoint+path+"/?data="+data;
     if(verbose)
